@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transactions | Finova</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../styles/transactions.css">
 </head>
 <body>
 <div class="dashboard-container">
+    <!-- Sidebar: kept consistent with the dashboard -->
     <aside class="sidebar">
         <div class="logo"><i class="fa-solid fa-wallet"></i><h2>Finova</h2></div>
         <ul class="menu">
@@ -24,6 +26,7 @@
     </aside>
 
     <main class="main-content transactions-page">
+        <!-- Navbar: kept consistent with the dashboard -->
         <header class="navbar">
             <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="transactionSearch" type="search" placeholder="Search transactions..." aria-label="Search transactions"></div>
             <div class="nav-right">
@@ -35,26 +38,82 @@
             </div>
         </header>
 
+        <!-- Page heading -->
         <section class="dashboard-header transactions-header">
-            <div><h1>Transactions</h1><p>View and search all income and expense records for your account.</p></div>
-            <a class="primary-btn" href="dashboard.html#addTransactionBtn"><i class="fa-solid fa-plus"></i>Add Transaction</a>
+            <div><h1>Transactions</h1><p>Manage and track all your income and expenses.</p></div>
+            <div class="transaction-header-actions"><button id="exportCsvButton" class="outline-btn"><i class="fa-solid fa-file-export"></i>Export CSV</button><button id="openTransactionModal" class="primary-btn"><i class="fa-solid fa-plus"></i>Add Transaction</button></div>
         </section>
 
-        <section class="card transactions-table-card">
-            <div class="transactions-toolbar">
-                <p id="transactionCount">0 transactions</p>
-                <select id="transactionTypeFilter" aria-label="Filter by transaction type"><option value="all">All Types</option><option value="income">Income</option><option value="expense">Expense</option></select>
+        <!-- Summary cards -->
+        <section id="transactionSummary" class="transaction-summary" aria-label="Transaction summary"></section>
+
+        <!-- Filter bar -->
+        <section class="transaction-filter-card" aria-label="Transaction filters">
+            <div class="filter-heading"><div><h2>Filter Transactions</h2><p>Refine the records you want to review.</p></div><button id="resetFiltersButton" class="text-btn"><i class="fa-solid fa-rotate-left"></i>Reset Filters</button></div>
+            <div class="filter-fields">
+                <label class="filter-field filter-search"><span>Search transaction</span><div class="filter-input"><i class="fa-solid fa-magnifying-glass"></i><input id="filterSearch" type="search" placeholder="Title, notes or payment method"></div></label>
+                <label class="filter-field"><span>Category</span><select id="categoryFilter"><option value="all">All Categories</option></select></label>
+                <label class="filter-field"><span>Type</span><select id="typeFilter"><option value="all">All Types</option><option value="income">Income</option><option value="expense">Expense</option></select></label>
+                <label class="filter-field"><span>Start Date</span><input id="startDateFilter" type="date"></label>
+                <label class="filter-field"><span>End Date</span><input id="endDateFilter" type="date"></label>
+                <label class="filter-field"><span>Sort By</span><select id="sortFilter"><option value="newest">Newest</option><option value="oldest">Oldest</option><option value="highest">Highest Amount</option><option value="lowest">Lowest Amount</option><option value="category">Category</option></select></label>
+                <label class="filter-field"><span>Status</span><select id="statusFilter"><option value="all">All Statuses</option><option value="completed">Completed</option><option value="pending">Pending</option><option value="cancelled">Cancelled</option></select></label>
             </div>
-            <div class="transactions-card">
-                <table>
-                    <thead><tr><th>Date</th><th>Title</th><th>Category</th><th>Amount</th><th>Type</th></tr></thead>
-                    <tbody id="transactionsBody"></tbody>
-                </table>
-                <div id="emptyTransactions" class="empty-transactions hidden"><i class="fa-solid fa-receipt"></i><h3>No transactions found</h3><p>Try a different search, or add your first transaction from the dashboard.</p></div>
-            </div>
+        </section>
+
+        <section class="transaction-content-grid">
+            <!-- Main transaction table -->
+            <article class="transactions-table-card">
+                <div class="table-heading"><div><h2>All Transactions</h2><p id="transactionCount">0 transactions</p></div><span id="activeFilterLabel" class="filter-result-label">Showing all records</span></div>
+                <div class="table-scroll"><table class="full-transaction-table"><thead><tr><th>Date</th><th>Title</th><th>Category</th><th>Type</th><th>Amount</th><th>Payment Method</th><th>Status</th><th>Notes</th><th>Actions</th></tr></thead><tbody id="transactionsBody"></tbody></table></div>
+                <div id="emptyTransactions" class="empty-transactions hidden"><div class="empty-illustration"><i class="fa-solid fa-receipt"></i></div><h3>No Transactions Yet</h3><p>Start tracking your finances by adding your first transaction.</p><button id="emptyAddTransaction" class="primary-btn"><i class="fa-solid fa-plus"></i>Add Transaction</button></div>
+                <nav id="pagination" class="transaction-pagination" aria-label="Transaction pagination"></nav>
+            </article>
+
+            <!-- Right insight sidebar -->
+            <aside class="transaction-insights">
+                <article class="transaction-side-card"><div class="side-card-heading"><h2>Recent Activity</h2><i class="fa-solid fa-clock-rotate-left"></i></div><div id="recentActivity" class="activity-list"></div></article>
+                <article class="transaction-side-card"><div class="side-card-heading"><h2>Recent Payments</h2><i class="fa-solid fa-credit-card"></i></div><div id="recentPayments" class="payment-list"></div></article>
+                <article class="transaction-side-card highlight-insight"><div class="side-card-heading"><h2>Quick Statistics</h2><i class="fa-solid fa-chart-pie"></i></div><div id="quickStatistics" class="quick-statistics"></div></article>
+            </aside>
+        </section>
+
+        <!-- Bottom charts -->
+        <section class="transaction-charts-grid">
+            <article class="chart-card"><div class="card-header"><div><h2>Recent Spending Trend</h2><p>Expense movement for the last six months</p></div></div><canvas id="spendingTrendChart"></canvas></article>
+            <article class="chart-card"><div class="card-header"><div><h2>Expense by Category</h2><p>Where your money is going</p></div></div><canvas id="expenseCategoryChart"></canvas></article>
+            <article class="chart-card"><div class="card-header"><div><h2>Monthly Income vs Expense</h2><p>Compare earnings and spending</p></div></div><canvas id="monthlyComparisonChart"></canvas></article>
         </section>
     </main>
 </div>
+
+<!-- Add / edit transaction modal -->
+<div id="transactionModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="transactionModalTitle">
+    <div class="modal-content transaction-modal-content">
+        <div class="modal-header"><h2 id="transactionModalTitle">Add Transaction</h2><button id="closeTransactionModal" type="button" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+        <form id="transactionForm" novalidate>
+            <input id="editingTransactionId" type="hidden">
+            <div class="modal-form-grid">
+                <label class="form-group"><span>Title</span><input id="txTitle" type="text" placeholder="e.g. Monthly Salary" required></label>
+                <label class="form-group"><span>Amount</span><input id="txAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required></label>
+                <label class="form-group"><span>Type</span><select id="txType" required><option value="expense">Expense</option><option value="income">Income</option></select></label>
+                <label class="form-group"><span>Category</span><select id="txCategory" required></select></label>
+                <label class="form-group"><span>Payment Method</span><select id="txMethod"><option value="UPI">UPI</option><option value="Credit Card">Credit Card</option><option value="Debit Card">Debit Card</option><option value="Bank Transfer">Bank Transfer</option><option value="Cash">Cash</option><option value="Manual">Manual</option></select></label>
+                <label class="form-group"><span>Date</span><input id="txDate" type="date" required></label>
+                <label class="form-group"><span>Status</span><select id="txStatus"><option value="completed">Completed</option><option value="pending">Pending</option><option value="cancelled">Cancelled</option></select></label>
+                <label class="form-group form-notes"><span>Notes</span><textarea id="txNotes" rows="3" placeholder="Add an optional note"></textarea></label>
+            </div>
+            <p id="transactionFormError" class="form-error hidden"></p>
+            <div class="modal-actions"><button id="cancelTransaction" type="button" class="outline-btn">Cancel</button><button type="submit" class="primary-btn"><i class="fa-solid fa-check"></i>Save Transaction</button></div>
+        </form>
+    </div>
+</div>
+
+<!-- Read-only transaction details modal -->
+<div id="transactionViewModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="transactionViewTitle"><div class="modal-content transaction-view-content"><div class="modal-header"><h2 id="transactionViewTitle">Transaction Details</h2><button id="closeTransactionView" type="button" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div><div id="transactionDetails" class="transaction-details"></div></div></div>
+
+<button id="floatingAddTransaction" class="floating-add-button" aria-label="Add transaction"><i class="fa-solid fa-plus"></i><span>Add Transaction</span></button>
+
 <script src="../scripts/localStorage.js"></script>
 <script src="../scripts/utils.js"></script>
 <script src="../scripts/transactions.js"></script>

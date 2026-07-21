@@ -1113,6 +1113,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initTransactionModal();
 
+    const pageParameters = new URLSearchParams(window.location.search);
+
+    if (pageParameters.get("addTransaction") === "true") {
+        openTransactionModal();
+    }
+
     if (load(K.notifs, []).length === 0) {
 
     save(K.notifs, [
