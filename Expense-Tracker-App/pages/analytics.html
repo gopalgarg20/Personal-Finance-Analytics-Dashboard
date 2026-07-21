@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | Finova</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <aside class="sidebar">
+        <div class="logo"><i class="fa-solid fa-wallet"></i><h2>Finova</h2></div>
+        <ul class="menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-house"></i><span>Dashboard</span></a></li>
+            <li class="active"><a href="analytics.html"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a></li>
+            <li><a href="transactions.html"><i class="fa-solid fa-money-bill-transfer"></i><span>Transactions</span></a></li>
+            <li><a href="budget.html"><i class="fa-solid fa-wallet"></i><span>Budget</span></a></li>
+            <li><a href="goals.html"><i class="fa-solid fa-bullseye"></i><span>Goals</span></a></li>
+            <li><a href="reports.html"><i class="fa-solid fa-file-lines"></i><span>Reports</span></a></li>
+            <li><a href="settings.html"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content analytics-page">
+        <header class="navbar">
+            <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="analyticsSearch" type="search" placeholder="Search insights..."></div>
+            <div class="nav-right">
+                <button id="themeToggle" class="icon-btn" aria-label="Toggle theme"><i id="themeIcon" class="fa-solid fa-moon"></i></button>
+                <div class="notification-wrapper">
+                    <button id="notificationBtn" class="icon-btn" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span id="notificationBadge">0</span></button>
+                    <div id="notificationPanel" class="notification-panel hidden">
+                        <div class="notification-header"><h3>Notifications</h3><button id="clearNotifications">Clear All</button></div>
+                        <div id="notificationList"></div>
+                    </div>
+                </div>
+                <div class="profile-wrapper">
+                    <div class="profile" id="profileBtn"><i class="fa-solid fa-circle-user"></i><div><h4 id="profileName">User</h4><p>Premium User</p></div><i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="profile-menu hidden" id="profileMenu">
+                        <button type="button"><i class="fa-solid fa-user"></i>My Profile</button>
+                        <button type="button" onclick="window.location.href='settings.html'"><i class="fa-solid fa-gear"></i>Settings</button>
+                        <button type="button" id="themeOption"><i class="fa-solid fa-moon"></i>Toggle Theme</button>
+                        <button type="button" id="logoutOption"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="dashboard-header analytics-header">
+            <div><h1>Analytics</h1><p>Track your money patterns and discover smarter ways to save.</p></div>
+            <div class="analytics-actions">
+                <div class="period-filter" role="group" aria-label="Analytics period">
+                    <button class="period-btn" data-period="today">Today</button>
+                    <button class="period-btn" data-period="week">This Week</button>
+                    <button class="period-btn active" data-period="month">This Month</button>
+                    <button class="period-btn" data-period="quarter">Last 3 Months</button>
+                    <button class="period-btn" data-period="year">This Year</button>
+                </div>
+                <button id="exportAnalyticsBtn" class="primary-btn"><i class="fa-solid fa-file-export"></i>Export Analytics</button>
+            </div>
+        </section>
+
+        <section id="analyticsSummary" class="summary-cards analytics-summary"></section>
+
+        <section class="analytics-chart-grid">
+            <article class="chart-card analytics-wide"><div class="card-header"><div><h2>Monthly Income vs Expense</h2><p>How your income compares to your spending</p></div><span class="analytics-legend"><i class="income-dot"></i>Income <i class="expense-dot"></i>Expense</span></div><canvas id="monthlyIncomeExpenseChart"></canvas></article>
+            <article class="chart-card"><div class="card-header"><div><h2>Expense by Category</h2><p>Your spending distribution</p></div></div><canvas id="analyticsCategoryChart"></canvas></article>
+            <article class="chart-card"><div class="card-header"><div><h2>Cash Flow Trend</h2><p>Net money movement over time</p></div></div><canvas id="cashFlowChart"></canvas></article>
+            <article class="chart-card"><div class="card-header"><div><h2>Income Sources</h2><p>Where your income comes from</p></div></div><canvas id="incomeSourcesChart"></canvas></article>
+        </section>
+
+        <section class="analytics-lower-grid">
+            <article class="card heatmap-card"><div class="card-header"><div><h2>Expense Heatmap</h2><p>Daily expense activity this month</p></div><span id="heatmapMonth"></span></div><div id="expenseHeatmap" class="expense-heatmap" aria-label="Expense heatmap"></div><div class="heatmap-scale"><span>Less</span><i></i><i></i><i></i><i></i><span>More</span></div></article>
+            <article class="card insights-card"><div class="card-header"><div><h2>Key Insights</h2><p>Highlights from the selected period</p></div></div><div id="insightsList" class="analytics-insights"></div></article>
+        </section>
+        <footer class="dashboard-footer"><p>© 2026 Finova. Built with ❤️ using HTML, CSS, JavaScript &amp; Chart.js.</p></footer>
+    </main>
+</div>
+<script src="../scripts/localStorage.js"></script>
+<script src="../scripts/utils.js"></script>
+<script src="../scripts/analytics.js"></script>
+</body>
+</html>

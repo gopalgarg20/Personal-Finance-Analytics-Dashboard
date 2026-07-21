@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Finova</title>
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Chart JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Main CSS -->
+
+    <link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- ===========================
+            SIDEBAR
+    ============================ -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-wallet"></i>
+
+            <h2>Finova</h2>
+
+        </div>
+
+        <ul class="menu">
+
+            <li class="active">
+                <a href="dashboard.html">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+
+                <a href="analytics.html">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    Analytics
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="transactions.html">
+
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+
+                    Transactions
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="budget.html">
+
+                    <i class="fa-solid fa-wallet"></i>
+
+                    Budget
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="goals.html">
+
+                    <i class="fa-solid fa-bullseye"></i>
+
+                    Goals
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="reports.html">
+
+                    <i class="fa-solid fa-file-lines"></i>
+
+                    Reports
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="settings.html">
+
+                    <i class="fa-solid fa-gear"></i>
+
+                    Settings
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- ===========================
+            MAIN CONTENT
+    ============================ -->
+
+    <main class="main-content">
+
+        <!-- ===========================
+                NAVBAR
+        ============================ -->
+
+        <header class="navbar">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    placeholder="Search Transactions...">
+
+            </div>
+
+            <div class="nav-right">
+
+               
+
+                <button id="themeToggle" class="icon-btn">
+
+                    <i id="themeIcon" class="fa-solid fa-moon"></i>
+
+                </button>
+
+                <div class="notification-wrapper">
+                
+                    <button id="notificationBtn" class="icon-btn">
+                    
+                        <i class="fa-solid fa-bell"></i>
+                    
+                        <span id="notificationBadge">0</span>
+                    
+                    </button>
+                
+                    <div id="notificationPanel" class="notification-panel hidden">
+                    
+                        <div class="notification-header">
+                        
+                            <h3>Notifications</h3>
+                        
+                            <button id="clearNotifications">
+                                Clear All
+                            </button>
+                        
+                        </div>
+                    
+                        <div id="notificationList">
+                        
+                        </div>
+                    
+                    </div>
+                
+                </div>
+
+            <div class="profile-wrapper">
+            
+                <div class="profile" id="profileBtn">
+                
+                    <i class="fa-solid fa-circle-user"></i>
+                
+                    <div>
+                    
+                        <h4>Gopal Garg</h4>
+                    
+                        <p>Premium User</p>
+                    
+                    </div>
+                
+                    <i class="fa-solid fa-chevron-down"></i>
+                
+                </div>
+            
+                <div class="profile-menu hidden" id="profileMenu">
+                
+                    <button id="profileOption">
+                        <i class="fa-solid fa-user"></i>
+                        My Profile
+                    </button>
+                
+                    <button id="settingsOption">
+                        <i class="fa-solid fa-gear"></i>
+                        Settings
+                    </button>
+                
+                    <button id="themeOption">
+                        <i class="fa-solid fa-moon"></i>
+                        Toggle Theme
+                    </button>
+                
+                    <button id="logoutOption">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+                    </button>
+                
+                </div>
+            
+            </div>
+
+            </div>
+
+        </header>
+
+        <!-- ===========================
+                PAGE HEADER
+        ============================ -->
+
+        <section class="dashboard-header">
+
+            <div>
+
+                <h1 id="welcomeText">👋 Hello, Gopal</h1>
+
+                <p id="greetTime">
+                    Good Morning! Here's your financial overview.
+                </p>
+
+            </div>
+
+            <button id="addTransactionBtn" class="primary-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Transaction
+
+            </button>
+
+        </section>
+
+        <!-- ===========================
+                SUMMARY CARDS
+        ============================ -->
+
+        <section
+            id="summaryGrid"
+            class="summary-cards">
+        </section>
+                <!-- ===========================
+                CHARTS SECTION
+        ============================ -->
+
+        <section class="charts-grid">
+
+            <!-- Expense Trend -->
+
+            <div class="chart-card">
+
+                <div class="card-header">
+
+                    <h2>Monthly Expenses</h2>
+
+                    <button>View All</button>
+
+                </div>
+
+                <canvas id="expenseChart"></canvas>
+
+            </div>
+
+            <!-- Income vs Expense -->
+
+            <div class="chart-card">
+
+                <div class="card-header">
+
+                    <h2>Income vs Expense</h2>
+
+                    <button>Monthly</button>
+
+                </div>
+
+                <canvas id="incomeExpenseChart"></canvas>
+
+            </div>
+
+            <!-- Expense Categories -->
+
+            <div class="chart-card">
+
+                <div class="card-header">
+
+                    <h2>Expense Categories</h2>
+
+                </div>
+
+                <canvas id="categoryChart"></canvas>
+
+            </div>
+
+            <!-- Savings Growth -->
+
+            <div class="chart-card">
+
+                <div class="card-header">
+
+                    <h2>Savings Growth</h2>
+
+                </div>
+
+                <canvas id="savingsChart"></canvas>
+
+            </div>
+
+        </section>
+
+
+
+       
+                <!-- ===========================
+                DASHBOARD BOTTOM
+        ============================ -->
+
+        <section class="dashboard-bottom">
+
+            <!-- ===========================
+                    RECENT TRANSACTIONS
+            ============================ -->
+
+            <div class="transactions-card">
+
+                <div class="card-header">
+
+                    <h2>Recent Transactions</h2>
+
+                    <a href="transactions.html">View All</a>
+
+                </div>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="recentTransactionsBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+         
+
+            </section>
+                <!-- ===========================
+                FOOTER
+        ============================ -->
+
+        <footer class="dashboard-footer">
+
+            <p>
+
+                © 2026 Finova. Built with ❤️ using HTML, CSS, JavaScript & Chart.js.
+
+            </p>
+
+        </footer>
+
+    </main>
+
+</div>
+
+<!-- Transaction Modal -->
+
+<div id="transactionModal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Add Transaction</h2>
+
+            <button id="closeTransactionModal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <form id="transactionForm">
+
+            <div class="form-group">
+                <label>Title</label>
+
+                <input
+                    type="text"
+                    id="txTitle"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>Amount</label>
+
+                <input
+                    type="number"
+                    id="txAmount"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>Category</label>
+
+                <select id="txCategory">
+
+                    <option value="food">Food</option>
+                    <option value="shopping">Shopping</option>
+                    <option value="transport">Transport</option>
+                    <option value="bills">Bills</option>
+                    <option value="entertain">Entertainment</option>
+                    <option value="health">Health</option>
+                    <option value="education">Education</option>
+                    <option value="travel">Travel</option>
+                    <option value="salary">Salary</option>
+                    <option value="freelance">Freelance</option>
+                    <option value="invest">Investment</option>
+                    <option value="other">Other</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Type</label>
+
+                <select id="txType">
+                    <option value="expense">Expense</option>
+                    <option value="income">Income</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Date</label>
+
+                <input
+                    type="date"
+                    id="txDate"
+                    required>
+            </div>
+
+            <button
+                class="primary-btn"
+                type="submit">
+
+                Save Transaction
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+<!-- ===========================
+        JAVASCRIPT FILES
+============================ -->
+
+
+<script src="../scripts/localStorage.js"></script>
+<script src="../scripts/utils.js"></script>
+<script src="../scripts/charts.js"></script>
+<script src="../scripts/app.js"></script>
+
+</body>
+
+</html>
