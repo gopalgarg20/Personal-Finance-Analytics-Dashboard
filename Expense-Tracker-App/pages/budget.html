@@ -14,10 +14,12 @@
     <main class="main-content budget-page">
         <header class="navbar"><div></div><div class="nav-right"><button id="themeToggle" class="icon-btn"><i id="themeIcon" class="fa-solid fa-moon"></i></button></div></header>
         <section class="dashboard-header"><div><h1>Budget</h1><p>Set spending limits and stay in control of your money.</p></div><button id="openBudgetModal" class="primary-btn"><i class="fa-solid fa-plus"></i>Add Budget</button></section>
-        <section id="budgetSummary" class="budget-summary"></section><section id="budgetList" class="budget-list"></section>
+        <section id="budgetSummary" class="budget-summary"></section>
+        <section id="budgetList" class="budget-list"></section>
+        <section class="budget-lower-grid"><article id="budgetOverview" class="budget-overview"></article><article class="budget-tips"><div class="budget-section-heading"><div><h2>Budget Tips</h2><p>Simple habits to help you stay on track.</p></div><i class="fa-solid fa-lightbulb"></i></div><ul><li>Stay below 80% of each budget where possible.</li><li>Track expenses regularly to avoid surprises.</li><li>Review your budgets at the start of every month.</li><li>Adjust limits when your financial priorities change.</li></ul></article></section>
     </main>
 </div>
-<div id="budgetModal" class="modal hidden"><div class="modal-content small-modal"><div class="modal-header"><h2>Add Budget</h2><button id="closeBudgetModal"><i class="fa-solid fa-xmark"></i></button></div><form id="budgetForm"><label class="form-group"><span>Category</span><select id="budgetCategory"></select></label><label class="form-group"><span>Monthly Limit</span><input id="budgetLimit" type="number" min="1" required></label><div class="modal-actions"><button type="submit" class="primary-btn">Save Budget</button></div></form></div></div>
+<div id="budgetModal" class="modal hidden"><div class="modal-content small-modal"><div class="modal-header"><h2 id="budgetModalTitle">Add Budget</h2><button id="closeBudgetModal" type="button"><i class="fa-solid fa-xmark"></i></button></div><form id="budgetForm"><input id="editingBudgetCategory" type="hidden"><label class="form-group"><span>Category</span><select id="budgetCategory"></select></label><label class="form-group"><span>Budget Limit</span><input id="budgetLimit" type="number" min="1" required></label><label class="form-group"><span>Month <em>(Optional)</em></span><input id="budgetMonth" type="month"></label><label class="form-group"><span>Notes <em>(Optional)</em></span><textarea id="budgetNotes" rows="3" placeholder="Add an optional note"></textarea></label><div class="modal-actions"><button id="cancelBudgetModal" type="button" class="outline-btn">Cancel</button><button type="submit" class="primary-btn">Save Budget</button></div></form></div></div>
 <script src="../scripts/localStorage.js"></script><script src="../scripts/utils.js"></script><script src="../scripts/budget.js"></script>
 </body>
 </html>
