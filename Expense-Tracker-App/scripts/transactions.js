@@ -169,13 +169,19 @@ function drawChart(chartName, canvasId, configuration) {
 
 /* -------------------- Modal actions -------------------- */
 
+function localTransactionDate() {
+    const date = new Date();
+    const offset = date.getTimezoneOffset();
+    return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 10);
+}
+
 function openTransactionModal(transaction = null) {
     const form = document.getElementById("transactionForm");
     form.reset();
     document.getElementById("editingTransactionId").value = transaction?.id || "";
     document.getElementById("transactionModalTitle").textContent = transaction ? "Edit Transaction" : "Add Transaction";
     document.getElementById("transactionFormError").classList.add("hidden");
-    document.getElementById("txDate").value = transaction?.date || new Date().toISOString().slice(0, 10);
+    document.getElementById("txDate").value = transaction?.date || localTransactionDate();
     if (transaction) { document.getElementById("txTitle").value = transaction.title; document.getElementById("txAmount").value = transaction.amount; document.getElementById("txType").value = transaction.type; document.getElementById("txCategory").value = transaction.category; document.getElementById("txMethod").value = transaction.method || "Manual"; document.getElementById("txStatus").value = transaction.status || "completed"; document.getElementById("txNotes").value = transaction.notes || ""; }
     document.getElementById("transactionModal").classList.remove("hidden");
     document.getElementById("txTitle").focus();

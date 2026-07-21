@@ -18,9 +18,14 @@ function analyticsDateRange(period) {
 
 function analyticsTransactions() {
     const range = analyticsDateRange(analyticsPeriod);
+    const startKey = `${range.start.getFullYear()}-${String(range.start.getMonth() + 1).padStart(2, "0")}-${String(range.start.getDate()).padStart(2, "0")}`;
+    const endKey = `${range.end.getFullYear()}-${String(range.end.getMonth() + 1).padStart(2, "0")}-${String(range.end.getDate()).padStart(2, "0")}`;
+    const utcTodayKey = new Date().toISOString().slice(0, 10);
     return getTransactions().filter((tx) => {
-        const date = new Date(`${tx.date}T00:00:00`);
-        return !Number.isNaN(date.valueOf()) && date >= range.start && date <= range.end;
+        const dateKey = String(tx.date || "").slice(0, 10);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) return false;
+        if (analyticsPeriod === "today") return dateKey === endKey || dateKey === utcTodayKey;
+        return dateKey >= startKey && dateKey <= endKey;
     });
 }
 
