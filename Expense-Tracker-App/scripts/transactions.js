@@ -214,7 +214,7 @@ function deleteTransaction(id) {
 
 /* -------------------- Events and page setup -------------------- */
 
-function refreshTransactionPage() { renderTransactionSummary(); renderTransactionsTable(); renderInsights(); renderCharts(); }
+function refreshTransactionPage() { renderTransactionSummary(); renderTransactionsTable(); renderInsights(); }
 
 function resetFilters() {
     ["filterSearch", "startDateFilter", "endDateFilter"].forEach((id) => { document.getElementById(id).value = ""; });
@@ -226,7 +226,7 @@ function initTransactionsChrome() {
     document.getElementById("profileName").textContent = session?.name || "User";
     const applyTheme = (theme) => { document.body.classList.toggle("dark", theme === "dark"); document.getElementById("themeIcon").className = `fa-solid fa-${theme === "dark" ? "sun" : "moon"}`; localStorage.setItem("theme", theme); };
     applyTheme(localStorage.getItem("theme") || "light");
-    document.getElementById("themeToggle").addEventListener("click", () => { applyTheme(document.body.classList.contains("dark") ? "light" : "dark"); renderCharts(); });
+    document.getElementById("themeToggle").addEventListener("click", () => { applyTheme(document.body.classList.contains("dark") ? "light" : "dark"); });
     document.getElementById("profileBtn").addEventListener("click", (event) => { event.stopPropagation(); profileMenu.classList.toggle("hidden"); });
     document.addEventListener("click", () => profileMenu.classList.add("hidden"));
     document.getElementById("logoutOption").addEventListener("click", () => { localStorage.removeItem(K.session); window.location.href = "../index.html"; });
@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("#categoryFilter, #typeFilter, #startDateFilter, #endDateFilter, #sortFilter, #statusFilter").forEach((element) => element.addEventListener("change", () => { currentPage = 1; renderTransactionsTable(); }));
     document.getElementById("transactionSearch").addEventListener("input", (event) => { document.getElementById("filterSearch").value = event.target.value; currentPage = 1; renderTransactionsTable(); });
     document.getElementById("resetFiltersButton").addEventListener("click", resetFilters); document.getElementById("exportCsvButton").addEventListener("click", exportCsv);
-    ["openTransactionModal", "emptyAddTransaction", "floatingAddTransaction"].forEach((id) => document.getElementById(id).addEventListener("click", () => openTransactionModal()));
+    ["openTransactionModal", "emptyAddTransaction"].forEach((id) => document.getElementById(id).addEventListener("click", () => openTransactionModal()));
     document.getElementById("closeTransactionModal").addEventListener("click", closeTransactionModal); document.getElementById("cancelTransaction").addEventListener("click", closeTransactionModal); document.getElementById("transactionForm").addEventListener("submit", saveTransaction);
     document.getElementById("closeTransactionView").addEventListener("click", () => document.getElementById("transactionViewModal").classList.add("hidden"));
     document.getElementById("transactionsBody").addEventListener("click", (event) => { const button = event.target.closest("[data-action]"); if (!button) return; const transaction = getTransactions().find((item) => item.id === button.dataset.id); if (!transaction) return; if (button.dataset.action === "view") viewTransaction(transaction); if (button.dataset.action === "edit") openTransactionModal(transaction); if (button.dataset.action === "delete") deleteTransaction(transaction.id); });

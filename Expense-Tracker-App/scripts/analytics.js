@@ -124,6 +124,6 @@ function initAnalyticsChrome() {
 
 document.addEventListener("DOMContentLoaded", () => {
     initAnalyticsChrome(); renderAnalyticsPage();
-    document.querySelectorAll(".period-btn").forEach((button) => button.addEventListener("click", () => { analyticsPeriod = button.dataset.period; document.querySelectorAll(".period-btn").forEach((item) => item.classList.toggle("active", item === button)); renderAnalyticsPage(); }));
+    document.getElementById("analyticsPeriod").addEventListener("change", (event) => { analyticsPeriod = event.target.value; renderAnalyticsPage(); });
     document.getElementById("exportAnalyticsBtn").addEventListener("click", exportAnalytics);
 });

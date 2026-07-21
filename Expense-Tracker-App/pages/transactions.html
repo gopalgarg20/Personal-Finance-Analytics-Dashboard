@@ -78,12 +78,6 @@
             </aside>
         </section>
 
-        <!-- Bottom charts -->
-        <section class="transaction-charts-grid">
-            <article class="chart-card"><div class="card-header"><div><h2>Recent Spending Trend</h2><p>Expense movement for the last six months</p></div></div><canvas id="spendingTrendChart"></canvas></article>
-            <article class="chart-card"><div class="card-header"><div><h2>Expense by Category</h2><p>Where your money is going</p></div></div><canvas id="expenseCategoryChart"></canvas></article>
-            <article class="chart-card"><div class="card-header"><div><h2>Monthly Income vs Expense</h2><p>Compare earnings and spending</p></div></div><canvas id="monthlyComparisonChart"></canvas></article>
-        </section>
     </main>
 </div>
 
@@ -111,8 +105,6 @@
 
 <!-- Read-only transaction details modal -->
 <div id="transactionViewModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="transactionViewTitle"><div class="modal-content transaction-view-content"><div class="modal-header"><h2 id="transactionViewTitle">Transaction Details</h2><button id="closeTransactionView" type="button" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div><div id="transactionDetails" class="transaction-details"></div></div></div>
-
-<button id="floatingAddTransaction" class="floating-add-button" aria-label="Add transaction"><i class="fa-solid fa-plus"></i><span>Add Transaction</span></button>
 
 <script src="../scripts/localStorage.js"></script>
 <script src="../scripts/utils.js"></script>
