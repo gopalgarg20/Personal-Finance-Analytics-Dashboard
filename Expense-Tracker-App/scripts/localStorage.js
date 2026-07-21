@@ -68,6 +68,35 @@ function userKey(key) {
     return `${key}.${session.email}`;
 
 }
+
+/* -------------------- Transaction Storage -------------------- */
+
+// Transactions are always stored per signed-in user. This prevents one
+// account's financial data from appearing in another account's dashboard.
+function getUserTransactions() {
+    return load(userKey(K.tx), []);
+}
+
+function saveUserTransactions(transactions) {
+    save(userKey(K.tx), transactions);
+}
+
+// Keeps old demo data available to the original demo account only.
+// Newly registered accounts intentionally begin with an empty transaction list.
+function migrateLegacyDemoTransactions() {
+    const session = load(K.session, null);
+    const isDemoUser = session?.email === "demo@finova.com";
+    const scopedTransactionKey = userKey(K.tx);
+
+    if (
+        isDemoUser &&
+        localStorage.getItem(scopedTransactionKey) === null &&
+        localStorage.getItem(K.tx) !== null
+    ) {
+        save(scopedTransactionKey, load(K.tx, []));
+    }
+}
+
 const uid = () => Math.random().toString(36).slice(2, 10);
 
 /* -------------------- Categories -------------------- */

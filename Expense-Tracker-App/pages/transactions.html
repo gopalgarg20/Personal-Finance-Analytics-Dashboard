@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions | Finova</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styles/transactions.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <aside class="sidebar">
+        <div class="logo"><i class="fa-solid fa-wallet"></i><h2>Finova</h2></div>
+        <ul class="menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-house"></i><span>Dashboard</span></a></li>
+            <li><a href="analytics.html"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a></li>
+            <li class="active"><a href="transactions.html"><i class="fa-solid fa-money-bill-transfer"></i><span>Transactions</span></a></li>
+            <li><a href="budget.html"><i class="fa-solid fa-wallet"></i><span>Budget</span></a></li>
+            <li><a href="goals.html"><i class="fa-solid fa-bullseye"></i><span>Goals</span></a></li>
+            <li><a href="reports.html"><i class="fa-solid fa-file-lines"></i><span>Reports</span></a></li>
+            <li><a href="settings.html"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content transactions-page">
+        <header class="navbar">
+            <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="transactionSearch" type="search" placeholder="Search transactions..." aria-label="Search transactions"></div>
+            <div class="nav-right">
+                <button id="themeToggle" class="icon-btn" aria-label="Toggle theme"><i id="themeIcon" class="fa-solid fa-moon"></i></button>
+                <div class="profile-wrapper">
+                    <div class="profile" id="profileBtn"><i class="fa-solid fa-circle-user"></i><div><h4 id="profileName">User</h4><p>Premium User</p></div><i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="profile-menu hidden" id="profileMenu"><button type="button" onclick="window.location.href='settings.html'"><i class="fa-solid fa-gear"></i>Settings</button><button type="button" id="logoutOption"><i class="fa-solid fa-right-from-bracket"></i>Logout</button></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="dashboard-header transactions-header">
+            <div><h1>Transactions</h1><p>View and search all income and expense records for your account.</p></div>
+            <a class="primary-btn" href="dashboard.html#addTransactionBtn"><i class="fa-solid fa-plus"></i>Add Transaction</a>
+        </section>
+
+        <section class="card transactions-table-card">
+            <div class="transactions-toolbar">
+                <p id="transactionCount">0 transactions</p>
+                <select id="transactionTypeFilter" aria-label="Filter by transaction type"><option value="all">All Types</option><option value="income">Income</option><option value="expense">Expense</option></select>
+            </div>
+            <div class="transactions-card">
+                <table>
+                    <thead><tr><th>Date</th><th>Title</th><th>Category</th><th>Amount</th><th>Type</th></tr></thead>
+                    <tbody id="transactionsBody"></tbody>
+                </table>
+                <div id="emptyTransactions" class="empty-transactions hidden"><i class="fa-solid fa-receipt"></i><h3>No transactions found</h3><p>Try a different search, or add your first transaction from the dashboard.</p></div>
+            </div>
+        </section>
+    </main>
+</div>
+<script src="../scripts/localStorage.js"></script>
+<script src="../scripts/utils.js"></script>
+<script src="../scripts/transactions.js"></script>
+</body>
+</html>

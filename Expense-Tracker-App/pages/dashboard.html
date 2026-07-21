@@ -20,6 +20,7 @@
     <!-- Main CSS -->
 
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
 
 </head>
 
@@ -130,7 +131,7 @@
             MAIN CONTENT
     ============================ -->
 
-    <main class="main-content">
+    <main class="main-content dashboard-page">
 
         <!-- ===========================
                 NAVBAR
@@ -144,7 +145,9 @@
 
                 <input
                     type="text"
-                    placeholder="Search Transactions...">
+                    id="dashboardSearch"
+                    placeholder="Search transactions and press Enter..."
+                    aria-label="Search transactions">
 
             </div>
 
@@ -196,7 +199,7 @@
                 
                     <div>
                     
-                        <h4>Gopal Garg</h4>
+                        <h4 id="profileName">User</h4>
                     
                         <p>Premium User</p>
                     
@@ -499,6 +502,7 @@
 <script src="../scripts/localStorage.js"></script>
 <script src="../scripts/utils.js"></script>
 <script src="../scripts/charts.js"></script>
+<script src="../scripts/dashboard.js"></script>
 <script src="../scripts/app.js"></script>
 
 </body>

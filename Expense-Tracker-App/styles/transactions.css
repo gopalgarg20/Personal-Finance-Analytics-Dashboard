@@ -1,0 +1,107 @@
+/* ==========================================================
+   FINOVA - Transactions Page Styles
+========================================================== */
+
+.transactions-header {
+    margin: 10px 0 30px;
+}
+
+.transactions-header .primary-btn {
+    min-width: auto;
+    height: auto;
+    padding: 12px 18px;
+}
+
+.transactions-table-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.transactions-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.transactions-toolbar p {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.transactions-toolbar select {
+    padding: 9px 12px;
+    background: var(--white);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+}
+
+.transactions-page .transactions-card {
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.transaction-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--text-light);
+    font-size: 13px;
+}
+
+.transaction-category i {
+    color: var(--primary);
+}
+
+.transaction-type {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.transaction-type.income {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.transaction-type.expense {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.empty-transactions {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.empty-transactions i {
+    margin-bottom: 14px;
+    color: var(--primary);
+    font-size: 32px;
+}
+
+.empty-transactions h3 {
+    margin-bottom: 6px;
+}
+
+.empty-transactions p {
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .transactions-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .transactions-toolbar select {
+        width: 100%;
+    }
+}

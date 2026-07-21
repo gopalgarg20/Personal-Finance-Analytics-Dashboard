@@ -120,7 +120,7 @@ function fmtDate(date) {
 /* -------------------- Transactions -------------------- */
 
 function getTransactions() {
-    return load(K.tx, []);
+    return getUserTransactions();
 }
 
 /* -------------------- Balance -------------------- */

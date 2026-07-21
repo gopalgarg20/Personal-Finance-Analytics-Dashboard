@@ -211,7 +211,7 @@ function renderRecentTransactions() {
 
     tbody.innerHTML = "";
 
-    const transactions = load(userKey(K.tx), []).slice(0, 5);
+    const transactions = getTransactions().slice(0, 5);
 
     transactions.forEach(tx => {
 
@@ -248,13 +248,17 @@ function deleteTransaction(id) {
 
     if (!confirm("Delete this transaction?")) return;
 
-    let transactions = load(userKey(K.tx), []);
+    let transactions = getTransactions();
 
     transactions = transactions.filter(tx => tx.id !== id);
 
-    save(userKey(K.tx), transactions);
+    saveUserTransactions(transactions);
 
-    renderDashboard();
+    if (typeof notifyDashboardDataChanged === "function") {
+        notifyDashboardDataChanged();
+    } else {
+        renderDashboard();
+    }
 
 }
 /* ==========================================================
@@ -808,11 +812,11 @@ function saveTransaction(e) {
         return;
     }
 
-    const transactions = load(userKey(K.tx), []);
+    const transactions = getTransactions();
 
     transactions.unshift(tx);
 
-    save(userKey(K.tx), transactions);
+    saveUserTransactions(transactions);
 
     $("#transactionForm").reset();
 
@@ -820,7 +824,11 @@ function saveTransaction(e) {
 
     closeTransactionModal();
 
-    renderDashboard();
+    if (typeof notifyDashboardDataChanged === "function") {
+        notifyDashboardDataChanged();
+    } else {
+        renderDashboard();
+    }
 
     alert("Transaction Added Successfully!");
 }
@@ -1090,7 +1098,16 @@ function initNotifications() {
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Dashboard Loaded");
 
+    migrateLegacyDemoTransactions();
+
     renderDashboard();
+
+    const session = load(K.session, null);
+    const profileName = $("#profileName");
+
+    if (profileName) {
+        profileName.textContent = session?.name || "User";
+    }
 
 
 
