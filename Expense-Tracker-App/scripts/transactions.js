@@ -153,7 +153,7 @@ function renderCharts() {
     const incomeValues = months.map((month) => monthTotals(month.key).income);
     const categoryValues = Object.entries(analyticsExpenseCategories()).sort((a, b) => b[1] - a[1]);
     drawChart("spending", "spendingTrendChart", { type: "line", data: { labels: months.map((month) => month.label), datasets: [{ data: expenseValues, borderColor: "#2563eb", backgroundColor: "rgba(37,99,235,.12)", fill: true, tension: .4, borderWidth: 3, pointRadius: 3, pointBackgroundColor: "#2563eb" }] }, options: transactionChartOptions() });
-    drawChart("category", "expenseCategoryChart", { type: "doughnut", data: { labels: categoryValues.map(([id]) => catById(id).name), datasets: [{ data: categoryValues.map(([, value]) => value), backgroundColor: categoryValues.map(([id]) => catById(id).color), borderWidth: 0, hoverOffset: 7 }] }, options: { maintainAspectRatio: false, cutout: "68%", plugins: { legend: { display: true, position: "bottom", labels: { usePointStyle: true, padding: 14, color: chartColors().text } } } } });
+    drawChart("category", "expenseCategoryChart", { type: "doughnut", data: { labels: categoryValues.map(([id]) => catById(id).name), datasets: [{ data: categoryValues.map(([, value]) => value), backgroundColor: categoryValues.map(([id]) => catById(id).color), borderWidth: 0, borderRadius: 8, spacing: 3, hoverOffset: 12 }] }, options: { maintainAspectRatio: false, cutout: "70%", layout: { padding: { top: 6, bottom: 4 } }, plugins: { legend: { display: true, position: "bottom", labels: { usePointStyle: true, pointStyle: "circle", boxWidth: 9, padding: 16, color: chartColors().text } } } } });
     drawChart("comparison", "monthlyComparisonChart", { type: "bar", data: { labels: months.map((month) => month.label), datasets: [{ label: "Income", data: incomeValues, backgroundColor: "#22c55e", borderRadius: 7 }, { label: "Expense", data: expenseValues, backgroundColor: "#ef4444", borderRadius: 7 }] }, options: transactionChartOptions() });
 }
 
@@ -179,7 +179,7 @@ function openTransactionModal(transaction = null) {
     const form = document.getElementById("transactionForm");
     form.reset();
     document.getElementById("editingTransactionId").value = transaction?.id || "";
-    document.getElementById("transactionModalTitle").textContent = transaction ? "Edit Transaction" : "Add Transaction";
+    document.getElementById("transactionModalTitle").textContent = transaction ? "Edit Transaction" : "Add Expense";
     document.getElementById("transactionFormError").classList.add("hidden");
     document.getElementById("txDate").value = transaction?.date || localTransactionDate();
     if (transaction) { document.getElementById("txTitle").value = transaction.title; document.getElementById("txAmount").value = transaction.amount; document.getElementById("txType").value = transaction.type; document.getElementById("txCategory").value = transaction.category; document.getElementById("txMethod").value = transaction.method || "Manual"; document.getElementById("txStatus").value = transaction.status || "completed"; document.getElementById("txNotes").value = transaction.notes || ""; }
@@ -247,6 +247,7 @@ function exportCsv() {
 
 document.addEventListener("DOMContentLoaded", () => {
     initTransactionsChrome(); renderCategoryOptions();
+    document.querySelectorAll("#openTransactionModal, #emptyAddTransaction").forEach((button) => { button.innerHTML = '<i class="fa-solid fa-plus"></i>Add Expense'; });
     const urlSearch = getTransactionSearchFromUrl();
     document.getElementById("transactionSearch").value = urlSearch; document.getElementById("filterSearch").value = urlSearch;
     document.querySelectorAll("#filterSearch, #categoryFilter, #typeFilter, #startDateFilter, #endDateFilter, #sortFilter, #statusFilter").forEach((element) => element.addEventListener("input", () => { currentPage = 1; renderTransactionsTable(); }));

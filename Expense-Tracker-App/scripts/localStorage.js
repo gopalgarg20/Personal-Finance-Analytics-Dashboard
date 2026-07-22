@@ -81,6 +81,21 @@ function saveUserTransactions(transactions) {
     save(userKey(K.tx), transactions);
 }
 
+// Finance records other than transactions are also private to the signed-in account.
+// The demo account keeps its original seeded records the first time it is opened.
+function getUserFinanceData(key, fallback = []) {
+    const scopedKey = userKey(key);
+    const session = load(K.session, null);
+    if (localStorage.getItem(scopedKey) === null && session?.email === "demo@finova.com" && localStorage.getItem(key) !== null) {
+        save(scopedKey, load(key, fallback));
+    }
+    return load(scopedKey, fallback);
+}
+
+function saveUserFinanceData(key, value) {
+    save(userKey(key), value);
+}
+
 // Keeps old demo data available to the original demo account only.
 // Newly registered accounts intentionally begin with an empty transaction list.
 function migrateLegacyDemoTransactions() {

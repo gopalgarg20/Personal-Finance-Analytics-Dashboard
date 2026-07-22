@@ -303,7 +303,7 @@ function renderHealthScore() {
         ? Math.max(0, now.savings / now.income)
         : 0;
 
-    const budgets = load(K.budgets, []);
+    const budgets = getUserFinanceData(K.budgets, []);
 
     const overrun = budgets.filter(
         (b) => (now.byCat[b.category] || 0) > b.limit
@@ -588,7 +588,7 @@ function renderInsights() {
         });
     }
 
-    const budgets = load(K.budgets, []);
+    const budgets = getUserFinanceData(K.budgets, []);
 
     budgets.forEach((budget) => {
         const spent = now.byCat[budget.category] || 0;
@@ -644,8 +644,8 @@ function renderRecommendations() {
 
     const now = monthTotals(thisMonth());
 
-    const budgets = load(K.budgets, []);
-    const goals = load(K.goals, []);
+    const budgets = getUserFinanceData(K.budgets, []);
+    const goals = getUserFinanceData(K.goals, []);
 
     const recommendations = [];
 
@@ -847,7 +847,7 @@ function renderBudgetProgress() {
 
     container.innerHTML = "";
 
-    const budgets = load(K.budgets, []);
+    const budgets = getUserFinanceData(K.budgets, []);
 
     const totals = monthTotals(thisMonth());
 
@@ -1100,6 +1100,9 @@ function initNotifications() {
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Dashboard Loaded");
+
+    const addExpenseButton = document.getElementById("addTransactionBtn");
+    if (addExpenseButton) addExpenseButton.innerHTML = '<i class="fa-solid fa-plus"></i> Add Expense';
 
     migrateLegacyDemoTransactions();
 

@@ -46,11 +46,46 @@ document.addEventListener("DOMContentLoaded", () => {
         wrapper.querySelector("form").addEventListener("submit", changePassword);
         return wrapper;
     }
-    function exportData() {
-        const backup = { app: "Finova", version: 1, exportedAt: new Date().toISOString(), settings: load(K.settings, {}), data: Object.fromEntries(financeKeys.map((key) => [key, load(userKey(key), load(key, []))])) };
-        const url = URL.createObjectURL(new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" }));
-        const link = Object.assign(document.createElement("a"), { href: url, download: `finova-backup-${new Date().toISOString().slice(0, 10)}.json` });
-        link.click(); URL.revokeObjectURL(url); showMessage("Your Finova backup has been downloaded.");
+    function loadScript(source) {
+        return new Promise((resolve, reject) => {
+            const existing = document.querySelector(`script[src="${source}"]`);
+            if (existing) return existing.dataset.loaded === "true" ? resolve() : existing.addEventListener("load", resolve, { once: true });
+            const script = document.createElement("script");
+            script.src = source; script.onload = () => { script.dataset.loaded = "true"; resolve(); }; script.onerror = reject;
+            document.head.append(script);
+        });
+    }
+    async function exportData() {
+        try {
+            if (!window.jspdf?.jsPDF) await loadScript("https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js");
+            if (!window.jspdf?.jsPDF?.API?.autoTable) await loadScript("https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js");
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ unit: "pt", format: "a4" });
+            const margin = 42, pageWidth = doc.internal.pageSize.getWidth();
+            const transactions = getTransactions().slice().sort((a, b) => String(b.date).localeCompare(String(a.date)));
+            const budgets = getUserFinanceData(K.budgets, []);
+            const goals = getUserFinanceData(K.goals, []);
+            const recurring = load(userKey(K.recurring), load(K.recurring, []));
+            const categoryName = (id) => CATEGORIES.find((category) => category.id === id)?.name || id || "Uncategorised";
+            const income = transactions.filter((item) => item.type === "income").reduce((total, item) => total + num(item.amount), 0);
+            const expense = transactions.filter((item) => item.type === "expense").reduce((total, item) => total + num(item.amount), 0);
+            const categories = transactions.filter((item) => item.type === "expense").reduce((all, item) => { all[item.category] = (all[item.category] || 0) + num(item.amount); return all; }, {});
+            const heading = (title) => { let y = doc.lastAutoTable ? doc.lastAutoTable.finalY + 28 : 166; if (y > doc.internal.pageSize.getHeight() - 54) { doc.addPage(); y = 48; } doc.setFont("helvetica", "bold"); doc.setFontSize(13); doc.setTextColor(15, 23, 42); doc.text(title, margin, y); return y; };
+            doc.setFillColor(37, 99, 235); doc.rect(0, 0, pageWidth, 92, "F");
+            doc.setTextColor(255, 255, 255); doc.setFont("helvetica", "bold"); doc.setFontSize(24); doc.text("Finova Financial Report", margin, 45);
+            doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.text(`Prepared ${new Date().toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}`, margin, 65);
+            doc.setTextColor(15, 23, 42); doc.setFont("helvetica", "bold"); doc.setFontSize(13); doc.text(settings.name || "Finova user", margin, 122);
+            doc.setFont("helvetica", "normal"); doc.setFontSize(10); doc.setTextColor(71, 85, 105); doc.text(`${transactions.length} transactions included`, margin, 140);
+            doc.autoTable({ startY: 158, head: [["Total income", "Total expenses", "Net balance", "Transactions"]], body: [[fmt(income), fmt(expense), fmt(income - expense), String(transactions.length)]], theme: "grid", margin: { left: margin, right: margin }, styles: { fontSize: 9, halign: "center" }, headStyles: { fillColor: [37, 99, 235] } });
+            doc.autoTable({ startY: heading("Expense by category") + 10, head: [["Category", "Amount"]], body: Object.entries(categories).sort((a, b) => b[1] - a[1]).map(([id, amount]) => [categoryName(id), fmt(amount)]), theme: "striped", margin: { left: margin, right: margin }, styles: { fontSize: 9 }, headStyles: { fillColor: [15, 23, 42] } });
+            doc.autoTable({ startY: heading("Transactions") + 10, head: [["Date", "Title", "Category", "Type", "Amount", "Method", "Status"]], body: transactions.map((item) => [fmtDate(item.date), item.title || "Untitled", categoryName(item.category), item.type || "Expense", fmt(item.amount), item.method || "Manual", item.status || "Completed"]), theme: "striped", margin: { left: margin, right: margin }, styles: { fontSize: 7.5, cellPadding: 4 }, headStyles: { fillColor: [37, 99, 235] } });
+            doc.autoTable({ startY: heading("Budgets and goals") + 10, head: [["Budget category", "Limit", "Goal", "Saved / Target"]], body: Array.from({ length: Math.max(budgets.length, goals.length) }, (_, index) => { const budget = budgets[index], goal = goals[index]; return [budget ? categoryName(budget.category) : "-", budget ? fmt(budget.limit) : "-", goal?.title || "-", goal ? `${fmt(goal.saved)} / ${fmt(goal.target)}` : "-"]; }), theme: "striped", margin: { left: margin, right: margin }, styles: { fontSize: 8 }, headStyles: { fillColor: [15, 23, 42] } });
+            if (recurring.length) { doc.autoTable({ startY: heading("Recurring payments") + 10, head: [["Name", "Amount", "Next date"]], body: recurring.map((item) => [item.title || "Payment", fmt(item.amount), item.nextDate ? fmtDate(item.nextDate) : "Not set"]), theme: "striped", margin: { left: margin, right: margin }, styles: { fontSize: 8 }, headStyles: { fillColor: [37, 99, 235] } }); }
+            const pages = doc.internal.getNumberOfPages();
+            for (let page = 1; page <= pages; page++) { doc.setPage(page); doc.setFontSize(8); doc.setTextColor(100, 116, 139); doc.text(`Finova - Financial report - Page ${page} of ${pages}`, margin, doc.internal.pageSize.getHeight() - 22); }
+            doc.save(`finova-financial-report-${new Date().toISOString().slice(0, 10)}.pdf`);
+            showMessage("Your financial report PDF has been downloaded.");
+        } catch (error) { console.error(error); showMessage("Unable to create the PDF. Please check your internet connection and try again.", "error"); }
     }
     function importData(file) {
         if (!file) return;
@@ -88,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     loadControls();
+    byId("exportDataButton").querySelector("span").innerHTML = '<i class="fa-solid fa-file-pdf"></i>Export PDF Report';
     byId("themeToggle").addEventListener("click", () => { localStorage.setItem("theme", document.body.classList.contains("dark") ? "light" : "dark"); applyTheme(); });
     byId("darkTheme").addEventListener("change", (event) => { localStorage.setItem("theme", event.target.checked ? "dark" : "light"); applyTheme(); });
     byId("settingsForm").addEventListener("submit", (event) => {

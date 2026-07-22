@@ -771,13 +771,38 @@ p{
 
 .chart-card{
 
-    background:var(--white);
+    background:color-mix(in srgb,var(--white) 78%,transparent);
 
     padding:20px;
 
     border-radius:16px;
 
     box-shadow:var(--shadow);
+
+    position:relative;
+    overflow:hidden;
+    border:1px solid color-mix(in srgb,#fff 42%,var(--border));
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+
+}
+
+.chart-card::before{
+    position:absolute;
+    top:0;
+    left:20px;
+    right:20px;
+    height:3px;
+    border-radius:0 0 6px 6px;
+    background:linear-gradient(90deg,rgba(37,99,235,.8),rgba(96,165,250,.45),transparent);
+    content:"";
+}
+
+.chart-card:hover{
+    transform:translateY(-4px);
+    border-color:color-mix(in srgb,var(--primary) 35%,var(--border));
+    box-shadow:0 18px 36px rgba(15,23,42,.12),inset 0 1px 0 rgba(255,255,255,.5);
 
 }
 
@@ -890,8 +915,32 @@ body.dark .dashboard-amount-pill.expense{
 
     width:100% !important;
 
-    height:300px !important;
+    height:285px !important;
+    display:block;
+    margin-top:4px;
 
+}
+
+.chart-card .card-header{
+    position:relative;
+    z-index:1;
+    padding-bottom:13px;
+    border-bottom:1px solid var(--border);
+}
+
+.chart-card .card-header h2{
+    font-size:17px;
+    letter-spacing:-.25px;
+}
+
+body.dark .chart-card{
+    background:rgba(30,41,59,.66);
+    border-color:rgba(148,163,184,.22);
+    box-shadow:0 14px 30px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+body.dark .chart-card:hover{
+    border-color:#3b82f6;
 }
 
 /*=========================================================
@@ -1323,7 +1372,6 @@ progress::-webkit-progress-value{
 body.dark .sidebar,
 body.dark .navbar,
 body.dark .summary-card,
-body.dark .chart-card,
 body.dark .transactions-card,
 body.dark .budget-card,
 body.dark .goal-card,

@@ -51,6 +51,26 @@ function setAnalyticsChart(name, canvasId, config) {
     analyticsCharts[name] = new Chart(canvas, config);
 }
 
+const expenseCategoryCenter = {
+    id: "expenseCategoryCenter",
+    afterDraw(chart, _args, options) {
+        const total = options?.total || 0;
+        const { ctx, chartArea } = chart;
+        if (!chartArea) return;
+        const x = (chartArea.left + chartArea.right) / 2;
+        const y = (chartArea.top + chartArea.bottom) / 2;
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--text-light").trim() || "#64748b";
+        ctx.font = "600 11px Inter, sans-serif";
+        ctx.fillText("TOTAL SPENT", x, y - 10);
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--text").trim() || "#0f172a";
+        ctx.font = "700 17px Inter, sans-serif";
+        ctx.fillText(fmt(total), x, y + 13);
+        ctx.restore();
+    }
+};
+
 function renderAnalyticsSummary() {
     const totals = analyticsTotals();
     const days = Math.max(1, Math.ceil((analyticsDateRange(analyticsPeriod).end - analyticsDateRange(analyticsPeriod).start) / 86400000) + 1);
@@ -81,7 +101,7 @@ function renderAnalyticsCharts() {
     const series = getMonthSeries(); const options = analyticsOptions(); const totals = analyticsTotals();
     setAnalyticsChart("incomeExpense", "monthlyIncomeExpenseChart", { type: "bar", data: { labels: series.labels, datasets: [{ label: "Income", data: series.income, backgroundColor: "#22c55e", borderRadius: 8, barPercentage: .58 }, { label: "Expense", data: series.expense, backgroundColor: "#ef4444", borderRadius: 8, barPercentage: .58 }] }, options: { ...options, plugins: { ...options.plugins, tooltip: { callbacks: { label: (context) => `${context.dataset.label}: ${fmt(context.parsed.y)}` } } } } });
     const categoryEntries = Object.entries(totals.categories).sort((a, b) => b[1] - a[1]);
-    setAnalyticsChart("category", "analyticsCategoryChart", { type: "doughnut", data: { labels: categoryEntries.map(([id]) => catById(id).name), datasets: [{ data: categoryEntries.map(([, value]) => value), backgroundColor: categoryEntries.map(([id]) => catById(id).color), borderWidth: 0, hoverOffset: 8 }] }, options: { maintainAspectRatio: false, cutout: "68%", plugins: { legend: { display: true, position: "bottom", labels: { usePointStyle: true, padding: 16, color: getComputedStyle(document.documentElement).getPropertyValue("--text").trim() } }, tooltip: { callbacks: { label: (context) => `${context.label}: ${fmt(context.parsed)}` } } } } });
+    setAnalyticsChart("category", "analyticsCategoryChart", { type: "doughnut", plugins: [expenseCategoryCenter], data: { labels: categoryEntries.map(([id]) => catById(id).name), datasets: [{ data: categoryEntries.map(([, value]) => value), backgroundColor: categoryEntries.map(([id]) => catById(id).color), borderColor: getComputedStyle(document.documentElement).getPropertyValue("--white").trim() || "#ffffff", borderWidth: 4, spacing: 2, hoverOffset: 6 }] }, options: { maintainAspectRatio: false, cutout: "72%", layout: { padding: { top: 4, bottom: 0 } }, plugins: { expenseCategoryCenter: { total: totals.expense }, legend: { display: true, position: "bottom", labels: { usePointStyle: true, pointStyle: "circle", boxWidth: 8, padding: 12, color: getComputedStyle(document.documentElement).getPropertyValue("--text").trim() } }, tooltip: { callbacks: { label: (context) => `${context.label}: ${fmt(context.parsed)}` } } } } });
     setAnalyticsChart("cashflow", "cashFlowChart", { type: "line", data: { labels: series.labels, datasets: [{ label: "Cash flow", data: series.income.map((income, index) => income - series.expense[index]), borderColor: "#2563eb", backgroundColor: "rgba(37,99,235,.12)", fill: true, tension: .4, pointRadius: 3, pointBackgroundColor: "#2563eb", borderWidth: 3 }] }, options });
     const incomeCategories = analyticsTransactions().filter((tx) => tx.type === "income").reduce((all, tx) => { all[tx.category] = (all[tx.category] || 0) + num(tx.amount); return all; }, {});
     const incomeEntries = Object.entries(incomeCategories);

@@ -296,7 +296,9 @@ function buildCatChart(canvasId, holderKey) {
                     data: values,
                     backgroundColor: colors,
                     borderWidth: 0,
-                    hoverOffset: 8
+                    borderRadius: 8,
+                    spacing: 3,
+                    hoverOffset: 12
                 }
             ]
         },
@@ -313,8 +315,10 @@ function buildCatChart(canvasId, holderKey) {
 
                     labels: {
                         color: chartTextColor(),
-                        boxWidth: 10,
-                        padding: 12,
+                        usePointStyle: true,
+                        pointStyle: "circle",
+                        boxWidth: 9,
+                        padding: 16,
 
                         font: {
                             size: 11
