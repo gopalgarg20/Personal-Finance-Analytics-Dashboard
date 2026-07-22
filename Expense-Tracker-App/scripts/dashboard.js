@@ -39,6 +39,7 @@ document.addEventListener(
 
 document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.getElementById("dashboardSearch");
+    const deleteAllButton = document.getElementById("deleteAllTransactions");
 
     if (searchInput) {
         searchInput.addEventListener("input", filterDashboardTransactions);
@@ -52,6 +53,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.href =
                     `transactions.html?search=${encodeURIComponent(searchTerm)}`;
             }
+        });
+    }
+
+    if (deleteAllButton) {
+        deleteAllButton.addEventListener("click", () => {
+            const count = getTransactions().length;
+
+            if (count === 0) {
+                alert("There are no transactions to delete.");
+                return;
+            }
+
+            const confirmed = confirm(
+                `Delete all ${count} transaction${count === 1 ? "" : "s"}? This action cannot be undone.`
+            );
+
+            if (!confirmed) return;
+
+            saveUserTransactions([]);
+            notifyDashboardDataChanged();
         });
     }
 });

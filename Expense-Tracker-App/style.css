@@ -815,6 +815,77 @@ p{
 
 }
 
+/* Compact amount indicators keep transaction rows calm and readable. */
+.dashboard-amount-cell{
+    background:transparent!important;
+}
+
+.dashboard-amount-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 9px;
+    border:1px solid transparent;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:700;
+    line-height:1;
+    white-space:nowrap;
+}
+
+.dashboard-amount-pill i{
+    font-size:11px;
+}
+
+.dashboard-amount-pill.income{
+    background:#ecfdf3;
+    border-color:#bbf7d0;
+    color:#15803d;
+}
+
+.dashboard-amount-pill.expense{
+    background:#fff5f5;
+    border-color:#fecaca;
+    color:#dc2626;
+}
+
+body.dark .dashboard-amount-pill.income{
+    background:#153a2a;
+    border-color:#246b45;
+    color:#86efac;
+}
+
+body.dark .dashboard-amount-pill.expense{
+    background:#431f27;
+    border-color:#7f2937;
+    color:#fca5a5;
+}
+
+.transaction-card-actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.delete-all-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:8px 11px;
+    border:1px solid #fecaca;
+    border-radius:8px;
+    background:#fff1f2;
+    color:#dc2626;
+    font-size:12px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.delete-all-btn:hover{
+    background:#fee2e2;
+    transform:translateY(-1px);
+}
+
 .chart-card canvas{
 
     width:100% !important;
@@ -1269,6 +1340,24 @@ body.dark .transactions-card tbody tr:hover{
 
     background:#334155;
 
+}
+
+body.dark .icon-btn{
+    background:#1d4ed8;
+    color:#eff6ff;
+    border:1px solid #60a5fa;
+    box-shadow:0 8px 20px rgba(37,99,235,.35);
+}
+
+body.dark .icon-btn:hover{
+    background:#2563eb;
+    color:#fff;
+}
+
+body.dark .delete-all-btn{
+    background:#451a1a;
+    border-color:#991b1b;
+    color:#fecaca;
 }
 
 body.dark progress::-webkit-progress-bar{

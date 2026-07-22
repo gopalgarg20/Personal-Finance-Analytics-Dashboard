@@ -221,8 +221,11 @@ function renderRecentTransactions() {
             <td>${fmtDate(tx.date)}</td>
             <td>${tx.title}</td>
             <td>${tx.category}</td>
-            <td class="${tx.type === "income" ? "income" : "expense"}">
-                ${tx.type === "income" ? "+" : "-"}${fmt(tx.amount)}
+            <td class="dashboard-amount-cell">
+                <span class="dashboard-amount-pill ${tx.type === "income" ? "income" : "expense"}">
+                    <i class="fa-solid fa-${tx.type === "income" ? "arrow-trend-up" : "arrow-trend-down"}"></i>
+                    ${tx.type === "income" ? "+" : "-"}${fmt(tx.amount)}
+                </span>
             </td>
             <td>${tx.type}</td>
             <td>
