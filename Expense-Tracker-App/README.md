@@ -136,31 +136,31 @@ Expense-Tracker-App/
 
 ### Login
 
-![Finova login screen](Assets/login.png)
+![Finova login screen](Assets/login.png.png)
 
 ### Dashboard
 
-![Finova dashboard](Assets/dashboard.png)
+![Finova dashboard](Assets/dashboard.png.png)
 
 ### Transactions
 
-![Finova transactions page](Assets/transactions.png)
+![Finova transactions page](Assets/dashboard.png%20%283%29.png)
 
 ### Analytics
 
-![Finova analytics page](Assets/analytics.png)
+![Finova analytics page](Assets/analytics.png.png)
 
 ### Budget
 
-![Finova budget page](Assets/budget.png)
+![Finova budget page](Assets/budget.png.png)
 
 ### Savings Goals
 
-![Finova savings goals page](Assets/goals.png)
+![Finova savings goals page](Assets/goals.png.png)
 
 ### Settings
 
-![Finova settings page](Assets/settings.png)
+![Finova settings page](Assets/settings.png.png)
 
 ## 🚀 Getting Started
 
@@ -211,7 +211,7 @@ This project is licensed under the [MIT License](LICENSE).
 ## 👤 Author
 
 **Developer Name:** Gopal Garg 
+<br>
 **GitHub:** (https://github.com/gopalgarg20)  
 **LinkedIn:** (https://www.linkedin.com/in/gopalgarg20/)  
 **Email:** gopalgarg029@gmail.com
-
