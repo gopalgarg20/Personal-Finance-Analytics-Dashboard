@@ -144,7 +144,7 @@ Expense-Tracker-App/
 
 ### Transactions
 
-![Finova transactions page](Assets/dashboard.png%20%283%29.png)
+![Finova transactions page](Assets/dashboard(3).png)
 
 ### Analytics
 
