@@ -3,6 +3,7 @@
 > A modern personal finance dashboard for tracking income, expenses, budgets, and savings goals from one focused workspace.
 
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/docs/Web/HTML)
+<br>
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/docs/Web/JavaScript)
 [![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chart.js&logoColor=white)](https://www.chartjs.org/)
@@ -106,13 +107,13 @@ Key highlights include account-aware local data storage, an interactive dashboar
 ```text
 Expense-Tracker-App/
 ├── Assets/
-│   ├── analytics.png.png
-│   ├── budget.png.png
-│   ├── dashboard.png.png
-│   ├── dashboard.png (2).png
-│   ├── dashboard.png (3).png
-│   ├── goals.png.png
-│   └── settings.png.png
+│   ├── analytics.png
+│   ├── budget.png
+│   ├── dashboard.png
+│   ├── dashboard(2).png
+│   ├── dashboard(3).png
+│   ├── goals.png
+│   └── settings.png
 ├── pages/
 │   ├── analytics.html
 │   ├── budget.html
