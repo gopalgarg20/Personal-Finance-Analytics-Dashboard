@@ -2036,3 +2036,15 @@ body.dark .profile-menu button:hover{
 /*=========================================================
                     END
 =========================================================*/
+
+
+/* FINOVA SIDEBAR REFINEMENT */
+.sidebar{background:linear-gradient(180deg,var(--white) 0%,#f4f8ff 100%);padding:30px 20px}
+.menu{margin-top:4px}.logo{gap:10px;padding:0 10px 26px;margin-bottom:20px;border-bottom:1px solid var(--border)}
+.logo i{display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:var(--primary);color:#fff;font-size:18px;box-shadow:0 8px 18px rgba(37,99,235,.25)}
+.logo h2{font-size:23px;letter-spacing:-.7px;color:var(--text)}.sidebar ul{gap:6px}
+.sidebar ul li a{gap:12px;padding:12px 14px;border-radius:10px;transition:background .2s ease,color .2s ease,transform .2s ease}
+.sidebar ul li a:hover{background:#edf4ff;color:var(--primary);transform:translateX(3px)}
+.sidebar ul li a i{display:grid;place-items:center;width:24px;height:24px}.sidebar ul li.active a{box-shadow:0 8px 18px rgba(37,99,235,.22)}
+body.dark .sidebar{background:linear-gradient(180deg,#1e293b 0%,#172033 100%)}body.dark .sidebar ul li a:hover{background:#263b61}
+@media(max-width:760px){.sidebar{padding:15px 12px;position:static;height:auto}.logo{padding:0 6px 15px;margin-bottom:12px}.sidebar ul{flex-direction:row;overflow-x:auto;padding-bottom:3px}.sidebar ul li{flex:0 0 auto}.sidebar ul li a{padding:10px 12px}.sidebar ul li a span{font-size:12px}}

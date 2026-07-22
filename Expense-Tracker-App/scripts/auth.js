@@ -3,7 +3,7 @@
 // ==========================================
 
 const DEMO_EMAIL = "demo@finova.com";
-const DEMO_PASSWORD = "123456";
+const DEMO_PASSWORD = localStorage.getItem("finova.demoPassword") || "123456";
 
 
 // ==========================================
