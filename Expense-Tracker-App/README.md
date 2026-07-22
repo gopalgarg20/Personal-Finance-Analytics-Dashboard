@@ -136,11 +136,11 @@ Expense-Tracker-App/
 
 ### Login
 
-![Finova login screen](Assets/login.png.png)
+![Finova login screen](Assets/login.png)
 
 ### Dashboard
 
-![Finova dashboard](Assets/dashboard.png.png)
+![Finova dashboard](Assets/dashboard.png)
 
 ### Transactions
 
@@ -148,19 +148,19 @@ Expense-Tracker-App/
 
 ### Analytics
 
-![Finova analytics page](Assets/analytics.png.png)
+![Finova analytics page](Assets/analytics.png)
 
 ### Budget
 
-![Finova budget page](Assets/budget.png.png)
+![Finova budget page](Assets/budget.png)
 
 ### Savings Goals
 
-![Finova savings goals page](Assets/goals.png.png)
+![Finova savings goals page](Assets/goals.png)
 
 ### Settings
 
-![Finova settings page](Assets/settings.png.png)
+![Finova settings page](Assets/settings.png)
 
 ## 🚀 Getting Started
 
