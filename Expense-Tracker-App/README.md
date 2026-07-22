@@ -5,11 +5,16 @@
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/docs/Web/HTML)
 <br>
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/docs/Web/CSS)
+<br>
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/docs/Web/JavaScript)
 [![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chart.js&logoColor=white)](https://www.chartjs.org/)
+<br>
 [![Responsive](https://img.shields.io/badge/Responsive-Design-2563EB?style=for-the-badge)](#-responsive-design)
+<br>
 [![Open Source](https://img.shields.io/badge/Open%20Source-Yes-22C55E?style=for-the-badge)](#-contributing)
+<br>
 [![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](#-license)
+
 
 Finova is a polished, client-side financial management application that makes everyday money tracking approachable. It brings transactions, budgeting, goals, reporting, and visual insights together in a responsive interface designed for clarity and fast decision-making.
 
@@ -58,11 +63,6 @@ Key highlights include account-aware local data storage, an interactive dashboar
 
 - Create personalized savings targets with saved amounts, deadlines, and icons.
 - Track goal progress, completion status, remaining amount, and target milestones.
-
-### Reports
-
-- Export a formatted PDF financial report from Settings.
-- Include financial totals, expense categories, transaction history, budgets, goals, and recurring payments.
 
 ### Settings
 
@@ -227,25 +227,14 @@ Because Finova is a client-side application, no package installation or backend 
 - AI-powered spending insights and personalized saving suggestions.
 - Multi-currency exchange-rate support and advanced recurring-transaction management.
 
-## 🤝 Contributing
-
-Contributions are welcome. To contribute:
-
-1. Fork the repository.
-2. Create a focused feature or fix branch.
-3. Make your changes with clear, consistent code.
-4. Test the affected screens and interactions locally.
-5. Open a pull request describing the change and its purpose.
-
-Please keep pull requests scoped, document user-facing changes, and avoid introducing unrelated formatting changes.
-
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
 
 ## 👤 Author
 
-**Developer Name:** Your Name  
-**GitHub:** [Your GitHub Profile](https://github.com/your-username)  
-**LinkedIn:** [Your LinkedIn Profile](https://www.linkedin.com/in/your-profile)  
-**Email:** your.email@example.com
+**Developer Name:** Gopal Garg 
+**GitHub:** (https://github.com/gopalgarg20)  
+**LinkedIn:** (https://www.linkedin.com/in/gopalgarg20/)  
+**Email:** gopalgarg029@gmail.com
+
