@@ -2,19 +2,6 @@
 
 > A modern personal finance dashboard for tracking income, expenses, budgets, and savings goals from one focused workspace.
 
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/docs/Web/HTML)
-<br>
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/docs/Web/CSS)
-<br>
-[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/docs/Web/JavaScript)
-[![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chart.js&logoColor=white)](https://www.chartjs.org/)
-<br>
-[![Responsive](https://img.shields.io/badge/Responsive-Design-2563EB?style=for-the-badge)](#-responsive-design)
-<br>
-[![Open Source](https://img.shields.io/badge/Open%20Source-Yes-22C55E?style=for-the-badge)](#-contributing)
-<br>
-[![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](#-license)
-
 
 Finova is a polished, client-side financial management application that makes everyday money tracking approachable. It brings transactions, budgeting, goals, reporting, and visual insights together in a responsive interface designed for clarity and fast decision-making.
 
@@ -149,49 +136,39 @@ Expense-Tracker-App/
 
 ### Login
 
-![Finova login screen](Assets/screenshots/login.png)
+![Finova login screen](Assets/login.png)
 
 ### Dashboard
 
-![Finova dashboard](Assets/screenshots/dashboard.png)
+![Finova dashboard](Assets/dashboard.png)
 
 ### Transactions
 
-![Finova transactions page](Assets/screenshots/transactions.png)
+![Finova transactions page](Assets/transactions.png)
 
 ### Analytics
 
-![Finova analytics page](Assets/screenshots/analytics.png)
+![Finova analytics page](Assets/analytics.png)
 
 ### Budget
 
-![Finova budget page](Assets/screenshots/budget.png)
+![Finova budget page](Assets/budget.png)
 
 ### Savings Goals
 
-![Finova savings goals page](Assets/screenshots/goals.png)
-
-### Reports
-
-![Finova reports page](Assets/screenshots/reports.png)
+![Finova savings goals page](Assets/goals.png)
 
 ### Settings
 
-![Finova settings page](Assets/screenshots/settings.png)
+![Finova settings page](Assets/settings.png)
 
 ## 🚀 Getting Started
 
 ### Clone the repository
 
-```bash
-git clone https://github.com/your-username/finova-personal-finance-dashboard.git
-cd finova-personal-finance-dashboard
-```
-
 ### Open the project
 
 Open the project folder in your preferred editor, such as Visual Studio Code.
-
 ### Run locally
 
 Because Finova is a client-side application, no package installation or backend server is required. Open `index.html` in a modern browser, or launch it with the Live Server extension in Visual Studio Code for a smoother local development experience.
